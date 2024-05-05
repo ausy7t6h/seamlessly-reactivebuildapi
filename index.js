@@ -1,10 +1,16 @@
-function findPeakElement(nums) {
-  let left = 0;
-  let right = nums.length - 1;
-  while (left < right) {
-    const mid = Math.floor((left + right) / 2);
-    if (nums[mid] < nums[mid + 1]) left = mid + 1;
-    else right = mid;
+function maximalSquare(matrix) {
+  if (matrix.length === 0) return 0;
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  const dp = Array.from(Array(rows + 1), () => Array(cols + 1).fill(0));
+  let maxSquare = 0;
+  for (let i = 1; i <= rows; i++) {
+    for (let j = 1; j <= cols; j++) {
+      if (matrix[i - 1][j - 1] === "1") {
+        dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1;
+        maxSquare = Math.max(maxSquare, dp[i][j]);
+      }
+    }
   }
-  return left;
+  return maxSquare * maxSquare;
 }
