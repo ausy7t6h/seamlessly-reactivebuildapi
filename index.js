@@ -1,14 +1,14 @@
-function maxEnvelopes(envelopes) {
-  envelopes.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
-  const dp = new Array(envelopes.length).fill(1);
-  let max = 1;
-  for (let i = 1; i < envelopes.length; i++) {
-    for (let j = 0; j < i; j++) {
-      if (envelopes[i][1] > envelopes[j][1]) {
-        dp[i] = Math.max(dp[i], dp[j] + 1);
-        max = Math.max(max, dp[i]);
+function wordBreak(s, wordDict) {
+  const wordSet = new Set(wordDict);
+  const dp = new Array(s.length + 1).fill(false);
+  dp[0] = true;
+  for (let end = 1; end <= s.length; end++) {
+    for (let start = 0; start < end; start++) {
+      if (dp[start] && wordSet.has(s.substring(start, end))) {
+        dp[end] = true;
+        break;
       }
     }
   }
-  return max;
+  return dp[s.length];
 }
