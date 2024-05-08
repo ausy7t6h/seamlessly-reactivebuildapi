@@ -1,14 +1,17 @@
-function wordBreak(s, wordDict) {
-  const wordSet = new Set(wordDict);
-  const dp = new Array(s.length + 1).fill(false);
-  dp[0] = true;
-  for (let end = 1; end <= s.length; end++) {
-    for (let start = 0; start < end; start++) {
-      if (dp[start] && wordSet.has(s.substring(start, end))) {
-        dp[end] = true;
-        break;
-      }
+function combinationSum3(k, n) {
+  const result = [];
+  backtrack([], 1, k, n);
+  return result;
+  function backtrack(combination, start, k, n) {
+    if (n === 0 && k === 0) {
+      result.push([...combination]);
+      return;
+    }
+    if (n < 0 || k === 0) return;
+    for (let i = start; i <= 9; i++) {
+      combination.push(i);
+      backtrack(combination, i + 1, k - 1, n - i);
+      combination.pop();
     }
   }
-  return dp[s.length];
 }
